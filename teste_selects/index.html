@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Teste Select</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+
+  <div style="display: flex;">
+    <div style="display: flex; flex-direction: column;">
+      Seu elo atual...
+      <img src="imgs/unranked.png" id="img_current_elo" />
+      <select id="select_current_elo">
+        <option id="is_unranked" value="imgs/unranked.png" selected>...</option>
+        <option id="is_unranked" value="imgs/unranked.png">Unranked</option>
+        <option id="is_iron" value="imgs/iron.png">Ferro</option>
+        <option id="is_bronze" value="imgs/bronze.png">Bronze</option>
+        <option id="is_silver" value="imgs/silver.png">Prata</option>
+      </select>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      Seu elo pretendido...
+      <img src="imgs/bronze.png" id="img_wanted_elo" />
+      <select id="select_wanted_elo">
+        <option id="want_iron" value="imgs/iron.png" selected>...</option>
+        <option id="want_iron" value="imgs/iron.png">Ferro</option>
+        <option id="want_bronze" value="imgs/bronze.png">Bronze</option>
+        <option id="want_silver" value="imgs/silver.png">Prata</option>
+      </select>
+    </div>
+  </div>
+
+</body>
+
+<script type="text/javascript">
+  // captura o elemento do select de elo atual, baseado no id
+  const sel_current_elo = document.querySelector("#select_current_elo")
+
+  // captura o elemento do select de elo pretendido, baseado no id
+  const sel_wanted_elo = document.querySelector("#select_wanted_elo")
+
+  function set_img(id_img, src) {
+    // captura o elemento da imagem, baseado no id passado
+    const img_wanted = document.querySelector(`#${id_img}`)
+
+    // altera a imagem por meio do atributo src
+    img_wanted.src = src
+  }
+
+  function get_current_img(sel) {
+    // captura a option atualmente selecionada no select
+    // como pode ter mais de uma, é retornado um array
+    const selected_option = sel.selectedOptions[0]
+
+    // id da option, que é o id do elo selecionado
+    const selected_id = selected_option.id
+
+    // value da option, que contém o src da imagem
+    const selected_img = selected_option.value
+
+    return { "id": selected_id, "img_src": selected_img }
+  }
+
+  // Adiciona um evento de onChange no select do elo atual
+  // Ele é disparado sempre que o valor do select for alterado
+  sel_current_elo.addEventListener("change", (e) => {
+    const current_data = get_current_img(e.target)
+
+    set_img("img_current_elo", current_data.img_src)
+
+    console.log("ID do elo atual: " + current_data.id)
+  })
+
+  // Adiciona um evento de onChange no select do elo pretendido
+  // Ele é disparado sempre que o valor do select for alterado
+  sel_wanted_elo.addEventListener("change", (e) => {
+    const wanted_data = get_current_img(e.target)
+
+    set_img("img_wanted_elo", wanted_data.img_src)
+
+    console.log("ID do elo pretendido: " + wanted_data.id)
+  })
+</script>
+
+</html>
